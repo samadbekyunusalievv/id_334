@@ -82,7 +82,7 @@ class _SettingsPageState extends State<SettingsPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildSettingsButton('Terms of Use', context, () {
-            _togglePremiumStatus();
+            _togglePremiumStatus(); //for testing purpose
           }),
           _buildSettingsButton('Privacy Policy', context, null),
         ],
