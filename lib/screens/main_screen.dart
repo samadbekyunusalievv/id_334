@@ -27,11 +27,12 @@ class _MainScreenState extends State<MainScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
-
-      if (_selectedIndex == 1 && !_isGameStarted) {
+      if (_selectedIndex == 1 && index != 1) {
+        _isGameStarted = false;
         _isGameFinished = false;
       }
+
+      _selectedIndex = index;
     });
   }
 

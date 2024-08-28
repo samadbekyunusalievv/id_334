@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PremiumScreen extends StatelessWidget {
   @override
@@ -92,7 +93,13 @@ class PremiumScreen extends StatelessWidget {
               width: 343.w,
               height: 56.h,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setBool('isPremium', true);
+
+                  Navigator.of(context).pop();
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4F2804),
                   shape: RoundedRectangleBorder(
@@ -114,7 +121,12 @@ class PremiumScreen extends StatelessWidget {
             ),
             SizedBox(height: 31.h),
             TextButton(
-              onPressed: () {},
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.setBool('isPremium', true);
+
+                Navigator.of(context).pop();
+              },
               child: Text(
                 'Restore',
                 style: TextStyle(
