@@ -47,7 +47,7 @@ class BottomNavbar extends StatelessWidget {
                     : const Color(0xFF7C634B),
               ),
             ),
-            label: 'Home',
+            label: 'Main',
           ),
           BottomNavigationBarItem(
             icon: Padding(
@@ -61,7 +61,7 @@ class BottomNavbar extends StatelessWidget {
                     : const Color(0xFF7C634B),
               ),
             ),
-            label: 'Art Price',
+            label: 'Artprice',
           ),
           BottomNavigationBarItem(
             icon: Padding(

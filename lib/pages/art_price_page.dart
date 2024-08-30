@@ -27,6 +27,10 @@ class _ArtPricePageState extends State<ArtPricePage> {
     super.initState();
     _loadSavedLevel();
     _controller.addListener(_updateNextButtonState);
+
+    _focusNode.addListener(() {
+      setState(() {});
+    });
   }
 
   void _loadSavedLevel() async {
@@ -250,6 +254,7 @@ class _ArtPricePageState extends State<ArtPricePage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         double cardHeight = (constraints.maxHeight * 0.72).clamp(445.r, 465.r);
+        bool isTextFieldFocused = _focusNode.hasFocus;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -286,14 +291,17 @@ class _ArtPricePageState extends State<ArtPricePage> {
                               ),
                             ),
                             SizedBox(height: 20.r),
-                            Center(
-                              child: Text(
-                                artPriceLevels[currentLevel].title,
-                                style: TextStyle(
-                                    fontSize: 22.r,
-                                    fontWeight: FontWeight.w600,
-                                    height: 1.2.h),
-                                textAlign: TextAlign.center,
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 25.w),
+                              child: Center(
+                                child: Text(
+                                  artPriceLevels[currentLevel].title,
+                                  style: TextStyle(
+                                      fontSize: 22.r,
+                                      fontWeight: FontWeight.w600,
+                                      height: 1.2.h),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
                             SizedBox(height: 10.r),
@@ -341,6 +349,7 @@ class _ArtPricePageState extends State<ArtPricePage> {
                 TextField(
                   controller: _controller,
                   focusNode: _focusNode,
+                  keyboardType: TextInputType.number,
                   style: TextStyle(
                     fontFamily: 'SF Pro Display',
                     fontWeight: FontWeight.w400,
@@ -384,32 +393,35 @@ class _ArtPricePageState extends State<ArtPricePage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20.r),
-                SizedBox(
-                  width: double.infinity,
-                  height: 56.r,
-                  child: ElevatedButton(
-                    onPressed: isNextButtonEnabled ? _checkPrice : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF4F2804)
-                          .withOpacity(isNextButtonEnabled ? 1 : 0.5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                    ),
-                    child: Text(
-                      'Next',
-                      style: TextStyle(
-                        fontFamily: 'SF Pro Display',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20.r,
-                        height: 1.h,
-                        color: Colors.white
+                if (!isTextFieldFocused) SizedBox(height: 20.r),
+                if (!isTextFieldFocused)
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56.r,
+                    child: ElevatedButton(
+                      onPressed: isNextButtonEnabled ? _checkPrice : null,
+                      style: ElevatedButton.styleFrom(
+                        disabledBackgroundColor:
+                            Color(0xFF4F2804).withOpacity(0.5),
+                        backgroundColor: Color(0xFF4F2804)
                             .withOpacity(isNextButtonEnabled ? 1 : 0.5),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                      ),
+                      child: Text(
+                        'Next',
+                        style: TextStyle(
+                          fontFamily: 'SF Pro Display',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20.r,
+                          height: 1.h,
+                          color: Colors.white
+                              .withOpacity(isNextButtonEnabled ? 1 : 0.5),
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ],
